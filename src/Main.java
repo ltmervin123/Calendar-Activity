@@ -1,12 +1,19 @@
 import java.util.Scanner;
 import java.util.Calendar;
 public class Main {
+
+    // Reset
+    public static final String RESET = "\033[0m";  // Text Reset
+
+    // Regular Colors
+    public static final String RED = "\033[0;31m"; // RED
+    public static final String CYAN = "\033[0;36m"; // CYAN
     public static void main(String[] args) {
 
         Scanner input = new Scanner(System.in);
 
         //Taking the year from the user and store to the year variable
-        System.out.print("Enter Year : ");
+        System.out.print("Input Year : ");
         int year = input.nextInt();
         System.out.println();
         //The numbers of months in a year
@@ -52,8 +59,11 @@ public class Main {
         //Initializing the number of days in a week
         final int DAYS_IN_A_WEEK = 7;
 
+
         //Printing month and year
-        System.out.println(" " + monthsInAYear[month] + " " + year);
+        //System.out.println(" "+ monthsInAYear[month]  + " " + year);
+        System.out.print(RED + " " +  monthsInAYear[month] + " " + RESET);
+        System.out.println(" " + year);
         System.out.println("Su Mo Tu We Th Fr Sa");
 
         //Skipping days
@@ -63,7 +73,15 @@ public class Main {
 
         //Printing the days of the month
         for(int day = 1; day <= daysInAMonth; day++){
-            System.out.printf("%2d ", day); //Specifying the day format into  characters
+            calendar.set(year, month, day);
+            int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+
+            // Check if the day is Saturday or Sunday
+            if (dayOfWeek == Calendar.SUNDAY || dayOfWeek == Calendar.SATURDAY) {
+                System.out.printf(CYAN + "%2d " + RESET, day); // Color weekends cyan
+            } else {
+                System.out.printf("%2d ", day); // Normal color for weekdays
+            }
 
             //Validating the days format in a week
             if((day + firstDayOfTheMonth - 1) % DAYS_IN_A_WEEK == 0){
